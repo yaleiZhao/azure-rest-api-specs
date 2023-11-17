@@ -823,6 +823,9 @@
               "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/ErrorResponse"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -914,6 +917,12 @@
               "$ref": "../../../../../common-types/resource-management/v5/privatelinks.json#/definitions/PrivateEndpointConnection"
             }
           },
+          "201": {
+            "description": "Created -- Created the private endpoint connection properties successfully.",
+            "schema": {
+              "$ref": "../../../../../common-types/resource-management/v5/privatelinks.json#/definitions/PrivateEndpointConnection"
+            }
+          },
           "202": {
             "description": "Asynchronous Operation Status Location",
             "headers": {
@@ -977,9 +986,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK -- Delete the private endpoint connection successfully."
-          },
           "202": {
             "description": "Asynchronous Operation Status Location",
             "headers": {
@@ -1046,7 +1052,7 @@
         },
         "responses": {
           "200": {
-            "description": "Array of Sync Group resources in Map Account",
+            "description": "Array of Private Endpoint resources in Map Account",
             "schema": {
               "$ref": "../../../../../common-types/resource-management/v5/privatelinks.json#/definitions/PrivateEndpointConnectionListResult"
             },
@@ -1069,7 +1075,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         }
       }
     }
@@ -1081,15 +1087,10 @@
       "description": "The name of the Maps Account.",
       "required": true,
       "type": "string",
-      "x-ms-parameter-location": "method"
-    },
-    "PrivateAtlasNameParameter": {
-      "name": "privateAtlasName",
-      "in": "path",
-      "description": "The name of the Private Atlas instance.",
-      "required": true,
-      "type": "string",
-      "x-ms-parameter-location": "method"
+      "x-ms-parameter-location": "method",
+      "pattern": "^[^\\p{C}%&:\\/\\#?]+$",
+      "minLength": 3,
+      "maxLength": 98
     },
     "CreatorNameParameter": {
       "name": "creatorName",
@@ -1097,7 +1098,10 @@
       "description": "The name of the Maps Creator instance.",
       "required": true,
       "type": "string",
-      "x-ms-parameter-location": "method"
+      "x-ms-parameter-location": "method",
+      "pattern": "^[^\\p{C}%&:\\/\\#?]+$",
+      "minLength": 3,
+      "maxLength": 98
     }
   },
   "definitions": {
@@ -1716,6 +1720,16 @@
           "format": "int32",
           "minimum": 1,
           "maximum": 100
+        },
+        "totalStorageUnitSizeInBytes": {
+          "description": "The total allocated storage unit size in bytes for the creator resource.",
+          "type": "integer",
+          "format": "int32"
+        },
+        "consumedStorageUnitSizeInBytes": {
+          "description": "The consumed storage unit size in bytes for the creator resource.",
+          "type": "integer",
+          "format": "int32"
         }
       },
       "required": [
